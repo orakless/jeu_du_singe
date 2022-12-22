@@ -1,23 +1,25 @@
 #include <iostream>
 #include <fstream>
+#include <cassert>
 using namespace std;
 
 #include "src/types_const.h"
 #include "src/hstring.h"
 #include "src/tree.h"
 #include "tests/tests.h"
+#include "src/game.h"
 
-int main()
+int main(int argc, const char*argv[])
 {
-    Tree newTree = {.value = nullptr,
-                    .smaller = nullptr,
-                    .bigger = nullptr};
+    assert (argc > 1);
 
-    import(newTree, DICT_PATH);
+    Tree dictionary = {};
+    Game game{};
 
-    String hello = {.value = nullptr, .memUsed = 0}; set(hello, "JOURNAL");
+    initialize(game, argv[1]);
+    import(dictionary, DICT_PATH);
 
-    cout << search(newTree, hello);
+    new_game(game, dictionary);
 
     return 0;
 }

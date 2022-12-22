@@ -1,11 +1,29 @@
 #include "hstring.h"
 #include "types_const.h"
 #include <cstring>
+#include <cassert>
+#include <cctype>
 
 void init(String &str)
 {
-    str.value = nullptr;
-    str.memUsed = 0;
+    str.value = new char[CHUNK_SIZE];
+    str.value[0] = 0;
+    str.memUsed = CHUNK_SIZE;
+}
+
+bool is_allocated(const String &SRC)
+{
+    return (SRC.value != nullptr);
+}
+
+void to_upper(String &src)
+{
+    uint count = 0;
+    while (src.value[count] != 0)
+    {
+        if (src.value[count] >= 'a' && src.value[count] <= 'z')
+            src.value[count] = (char)toupper(src.value[count]);
+    }
 }
 
 char * get(const String &SRC)
@@ -19,7 +37,7 @@ void set(String &dest, const char *SRC)
             memSize = (len/CHUNK_SIZE)*CHUNK_SIZE*sizeof(char);
     if (len % CHUNK_SIZE != 0) memSize += CHUNK_SIZE;
 
-    if (memSize != dest.memUsed)
+    if (memSize != dest.memUsed || dest.value == nullptr)
     {
         delete[] dest.value;
         dest.value = new char[memSize];
@@ -36,6 +54,8 @@ void set(String &dest, const String &SRC)
 void append(String &dest, char SRC)
 {
     ulong currLen = strlen(dest.value);
+    assert (dest.value != nullptr);
+
     if (currLen+2 > dest.memUsed)
     {
         auto newValue = new char[dest.memUsed+CHUNK_SIZE];

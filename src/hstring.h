@@ -13,6 +13,23 @@ struct String
  */
 void init(String &str);
 
+/**
+ * @brief Checks whether the String is allocated or not.
+ * @param SRC
+ */
+bool is_allocated(const String &SRC);
+
+/**
+ *
+ * @param SRC
+ */
+void to_upper(String &SRC);
+
+/**
+ * @brief Returns the String value as a c-string.
+ * @param SRC
+ * @return c-string
+ */
 char * get(const String &SRC);
 
 /**

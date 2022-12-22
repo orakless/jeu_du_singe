@@ -148,19 +148,21 @@ void import(Tree &tree, const char *PATH)
     in.clear();
     in.seekg(0);
 
-    char * wordList[lineCount];
+    char ** wordList = new char *[lineCount];
 
     uint count = 0;
+
     while (in)
     {
-        auto newWord = new char[MAX_WORD_SIZE];
-        in >> std::setw(MAX_WORD_SIZE) >> newWord;
-        wordList[count] = newWord;
+        wordList[count] = new char[MAX_WORD_SIZE];
+        in >> std::setw(MAX_WORD_SIZE) >> wordList[count];
         ++count;
     }
     in.close();
 
     import_loop(tree, wordList, count-1);
+
+    delete [] wordList;
 }
 
 bool search(Tree &tree, const char *SRC)
