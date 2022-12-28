@@ -31,6 +31,7 @@ void to_upper(String &SRC);
  * @return c-string
  */
 char * get(const String &SRC);
+char * get(const String *SRC);
 
 /**
  * @brief Sets the value for a given String

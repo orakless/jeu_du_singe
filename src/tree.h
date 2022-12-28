@@ -35,11 +35,20 @@ bool is_empty(const Tree &tree);
 void set(Tree &tree, const char *SRC);
 
 /**
- * @brief Adds a value to the Tree.
- * @param tree The Tree
- * @param SRC The value
+ * @brief Adds a word in the Tree.
+ * @param tree
+ * @param SRC
  */
 void add(Tree &tree, const char *SRC);
+
+/**
+ * @brief Gives the first word in the Tree that starts with WORD.
+ * @param tree
+ * @param WORD
+ * @return String struct of the word.
+ */
+String * starts_with(Tree &tree, const char *WORD);
+String * starts_with(Tree &tree, const String &WORD);
 
 /**
  * @brief Searches for a word in the Tree.

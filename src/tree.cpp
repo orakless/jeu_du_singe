@@ -1,6 +1,5 @@
 #include <cstring>
 #include <cassert>
-#include <fstream>
 #include <iomanip>
 #include <iostream>
 
@@ -77,11 +76,6 @@ void add(Tree &tree, const char *SRC)
     }
 }
 
-void add(Tree &tree, const String &SRC)
-{
-    add(tree, SRC.value);
-}
-
 static void import_add(Tree &tree, char ** wordList, uint index)
 {
     add(tree, wordList[index]);
@@ -135,6 +129,32 @@ static void import_loop(Tree &tree, char ** wordList, uint count)
     }
 
     destroy(ranges);
+}
+
+String * starts_with(Tree &tree, const char *WORD)
+{
+    Tree * currentTree = &tree;
+    while (currentTree != nullptr)
+    {
+        if (!strcmp(get(*currentTree->value), WORD))
+            return currentTree->value;
+        else if (strcmp(get(*currentTree->value), WORD) < 0)
+        {
+            if (currentTree->bigger != nullptr) currentTree = currentTree->bigger;
+            else currentTree = nullptr;
+        }
+        else
+        {
+            if (currentTree->smaller != nullptr) currentTree = currentTree->smaller;
+            else currentTree = nullptr;
+        }
+    }
+    return nullptr;
+}
+
+String * starts_with(Tree &tree, const String &WORD)
+{
+    return starts_with(tree, WORD.value);
 }
 
 void import(Tree &tree, const char *PATH)

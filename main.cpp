@@ -16,7 +16,7 @@ int main(int argc, const char*argv[])
     Tree dictionary = {};
     Game game{};
 
-    initialize(game, argv[1]);
+    initialize(game, dictionary, argv[1]);
     import(dictionary, DICT_PATH);
 
     new_game(game, dictionary);

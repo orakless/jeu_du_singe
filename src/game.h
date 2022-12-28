@@ -63,6 +63,6 @@ void new_game(Game &game, Tree &dictionary);
  * @param game
  * @param szPlayers
  */
-void initialize(Game &game, const char * szPlayers);
+void initialize(Game &game, Tree &dictionary, const char * szPlayers);
 
 #endif //SINGE_GAME_H

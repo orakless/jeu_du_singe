@@ -3,6 +3,7 @@
 //
 
 #include "game.h"
+#include "player.h"
 #include <cstring>
 #include <cassert>
 #include <iostream>
@@ -100,8 +101,19 @@ void new_game(Game &game, Tree &dictionary)
         if (is_human(currentPlayer))
         {
             char newChar;
-            cin >> newChar;
-            cin.ignore(INT_MAX, '\n');
+            if (is_human(currentPlayer))
+            {
+                cin >> newChar;
+                cin.ignore(INT_MAX, '\n');
+            }
+            else
+            {
+                if (strstr(get(currentPlayer.word),
+                           get(game.word)) != get(currentPlayer.word))
+                    get_new_word(currentPlayer, dictionary, game.word);
+                newChar = get_next_character(currentPlayer, game.word);
+                cout << newChar;
+            }
 
             if (newChar >= 'a' && newChar <= 'z') newChar = (char) toupper(newChar);
 
@@ -129,7 +141,7 @@ void new_game(Game &game, Tree &dictionary)
     cout << "La partie est finie" << endl;
 }
 
-void initialize(Game &game, const char * szPlayers)
+void initialize(Game &game, Tree &dictionary, const char * szPlayers)
 {
     assert (szPlayers != nullptr);
     init(game.word);
@@ -139,9 +151,7 @@ void initialize(Game &game, const char * szPlayers)
     for (uint indPlayers = 0; indPlayers < game.playerNumber; ++indPlayers)
     {
         assert (szPlayers[indPlayers] == 'R' || szPlayers[indPlayers] == 'H' );
-        game.players[indPlayers].id = indPlayers+1;
-        game.players[indPlayers].type = szPlayers[indPlayers];
-        game.players[indPlayers].score = 0;
-
+        initialize(game.players[indPlayers], szPlayers[indPlayers],
+                   indPlayers+1, dictionary);
     }
 }

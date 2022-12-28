@@ -31,6 +31,11 @@ char * get(const String &SRC)
     return SRC.value;
 }
 
+char * get (const String *SRC)
+{
+    return SRC->value;
+}
+
 void set(String &dest, const char *SRC)
 {
     unsigned long len = strlen(SRC),
