@@ -4,11 +4,11 @@
 #include <cassert>
 #include <cctype>
 
-void init(String &str)
+void init(String *str)
 {
-    str.value = new char[CHUNK_SIZE];
-    str.value[0] = 0;
-    str.memUsed = CHUNK_SIZE;
+    str->value = new char[CHUNK_SIZE];
+    str->value[0] = 0;
+    str->memUsed = CHUNK_SIZE;
 }
 
 bool is_allocated(const String &SRC)

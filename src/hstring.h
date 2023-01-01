@@ -11,7 +11,7 @@ struct String
  * @brief Initialize a string structure with default values
  * @param[IN] str The string to initialize
  */
-void init(String &str);
+void init(String *str);
 
 /**
  * @brief Checks whether the String is allocated or not.

@@ -3,6 +3,7 @@
 //
 
 #include "player.h"
+#include "hstring.h"
 #include <cstring>
 #include <cassert>
 #include <cstdlib>
@@ -17,13 +18,25 @@ bool is_human(Player &player)
 void get_new_word(Player &player, Tree &tree, char *WORD) {
     assert (!is_human(player));
 
+    if (player.word == nullptr)
+    {
+        player.word = new String{};
+        init(player.word);
+    }
+
     if (WORD != nullptr)
     {
         String *newWord = starts_with(tree, WORD);
-        if (newWord == nullptr) player.haveAWord = false;
-        else player.word = newWord;
+        if (newWord == nullptr)
+        {
+            player.haveAWord = false;
+        }
+        else
+        {
+            set(*player.word, *newWord);
+        }
     }
-    else player.word = tree.value;
+    else set(*player.word, *tree.value);
 }
 
 void get_new_word(Player &player, Tree &tree, String &WORD)
@@ -38,7 +51,7 @@ char get_next_character(Player &player, String &WORD)
     if (player.haveAWord)
     {
         uint size = strlen(get(WORD));
-        return get(player.word)[size-1];
+        return get(player.word)[size];
     }
     else
     {

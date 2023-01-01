@@ -46,7 +46,7 @@ void show_score(Game &game)
     }
     cout << endl;
     destroy(game.word); // Destroys/resets the word since the game is finished.
-    init(game.word);
+    init(&game.word);
 }
 
 void check_word(Game &game, Tree &dictionary, Player &currentPlayer, uint &playerTurn)
@@ -64,10 +64,22 @@ void check_word(Game &game, Tree &dictionary, Player &currentPlayer, uint &playe
 void ask_word(Game &game, Tree &dictionary, uint &playerTurn)
 {
     Player * currentPlayer = &game.players[playerTurn];
-    char newWord[26];
+    char * newWord;
 
     cout << currentPlayer->id << currentPlayer->type << ", saisir le mot > ";
-    cin >> newWord; toupper(newWord);
+
+    if (is_human(*currentPlayer))
+    {
+        char playerWord[26];
+        cin >> playerWord; toupper(playerWord);
+        newWord = playerWord;
+    }
+    else
+    {
+        newWord = get(currentPlayer->word);
+    }
+
+
 
     if (strstr(newWord, get(game.word)) != newWord)
     {
@@ -98,45 +110,48 @@ void new_game(Game &game, Tree &dictionary)
         Player &currentPlayer = game.players[playerTurn];
         cout << currentPlayer.id << currentPlayer.type << ", (" << game.word.value << ") > ";
 
+
+        char newChar;
         if (is_human(currentPlayer))
         {
-            char newChar;
-            if (is_human(currentPlayer))
-            {
-                cin >> newChar;
-                cin.ignore(INT_MAX, '\n');
-            }
-            else
-            {
-                if (strstr(get(currentPlayer.word),
-                           get(game.word)) != get(currentPlayer.word))
-                    get_new_word(currentPlayer, dictionary, game.word);
-                newChar = get_next_character(currentPlayer, game.word);
-                cout << newChar;
-            }
-
-            if (newChar >= 'a' && newChar <= 'z') newChar = (char) toupper(newChar);
-
-            switch (newChar)
-            {
-                case '?':
-                    if (playerTurn == 0) playerTurn = game.playerNumber-1;
-                    else playerTurn--;
-                    ask_word(game, dictionary, playerTurn);
-                    break;
-                case '!':
-                    cout << "le joueur " << currentPlayer.id << currentPlayer.type
-                         << " abandonne la manche et prend un quart de singe" << endl;
-                    currentPlayer.score++;
-                    show_score(game);
-                    break;
-                default:
-                    if (!is_allocated(game.word))
-                        set(game.word, "");
-                    append(game.word, newChar);
-                    check_word(game, dictionary, currentPlayer, playerTurn);
-            }
+            cin >> newChar;
+            cin.ignore(INT_MAX, '\n');
         }
+        else
+        {
+            if (currentPlayer.word == nullptr || strstr(get(currentPlayer.word),
+                       get(game.word)) != get(currentPlayer.word))
+                get_new_word(currentPlayer, dictionary, game.word);
+
+            if (currentPlayer.haveAWord)
+                newChar = get_next_character(currentPlayer, game.word);
+            else newChar = '?';
+
+            cout << newChar;
+        }
+
+        if (newChar >= 'a' && newChar <= 'z') newChar = (char) toupper(newChar);
+
+        switch (newChar)
+        {
+            case '?':
+                if (playerTurn == 0) playerTurn = game.playerNumber-1;
+                else playerTurn--;
+                ask_word(game, dictionary, playerTurn);
+                break;
+            case '!':
+                cout << "le joueur " << currentPlayer.id << currentPlayer.type
+                     << " abandonne la manche et prend un quart de singe" << endl;
+                currentPlayer.score++;
+                show_score(game);
+                break;
+            default:
+                if (!is_allocated(game.word))
+                    set(game.word, "");
+                append(game.word, newChar);
+                check_word(game, dictionary, currentPlayer, playerTurn);
+        }
+
     }
     cout << "La partie est finie" << endl;
 }
@@ -144,7 +159,7 @@ void new_game(Game &game, Tree &dictionary)
 void initialize(Game &game, Tree &dictionary, const char * szPlayers)
 {
     assert (szPlayers != nullptr);
-    init(game.word);
+    init(&game.word);
     game.playerNumber = strlen(szPlayers);
     game.players = new Player[game.playerNumber];
 

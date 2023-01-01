@@ -25,7 +25,7 @@ bool is_tree_empty(const Tree &tree)
 void set(Tree &tree, const char *SRC)
 {
     tree.value = new String;
-    init(*tree.value);
+    init(tree.value);
     set(*tree.value, SRC);
 }
 
@@ -134,11 +134,12 @@ static void import_loop(Tree &tree, char ** wordList, uint count)
 String * starts_with(Tree &tree, const char *WORD)
 {
     Tree * currentTree = &tree;
-    while (currentTree != nullptr)
-    {
-        if (!strcmp(get(*currentTree->value), WORD))
+    while (currentTree != nullptr) {
+        if (strstr(get(currentTree->value), WORD) == get(currentTree->value))
+        {
             return currentTree->value;
-        else if (strcmp(get(*currentTree->value), WORD) < 0)
+        }
+        else if (strcmp(get(*currentTree->value), WORD) > 0)
         {
             if (currentTree->bigger != nullptr) currentTree = currentTree->bigger;
             else currentTree = nullptr;
