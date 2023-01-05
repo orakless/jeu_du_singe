@@ -9,6 +9,15 @@
 #include "player.h"
 #include "types_const.h"
 #include "tree.h"
+#include "hstring.h"
+#include "tree.h"
+
+#include <cstring>
+#include <cassert>
+#include <iostream>
+#include <climits>
+#include <cctype>
+using namespace std;
 
 struct Game {
     String word;
@@ -64,5 +73,11 @@ void new_game(Game &game, Tree &dictionary);
  * @param szPlayers
  */
 void initialize(Game &game, Tree &dictionary, const char * szPlayers);
+
+/**
+ * @brief Destroys a Game variable
+ * @param game
+ */
+void destroy(Game &game);
 
 #endif //SINGE_GAME_H

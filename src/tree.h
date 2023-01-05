@@ -5,7 +5,15 @@
 #ifndef SINGE_TREE_H
 #define SINGE_TREE_H
 
+#include <cstring>
+#include <cassert>
+#include <iomanip>
+#include <iostream>
 #include "hstring.h"
+#include "types_const.h"
+#include "text_file.h"
+#include "range.h"
+#include "file.h"
 
 struct Tree
 {

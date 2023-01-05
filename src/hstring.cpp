@@ -1,8 +1,5 @@
 #include "hstring.h"
-#include "types_const.h"
-#include <cstring>
-#include <cassert>
-#include <cctype>
+
 
 void init(String *str)
 {

@@ -11,7 +11,8 @@
 
 void test_tree()
 {
-    Tree testTree = {.value = nullptr, .smaller = nullptr, .bigger = nullptr};
+    Tree testTree{};
+    testTree.value = nullptr; testTree.smaller = nullptr; testTree.bigger = nullptr;
 
     set(testTree, "Hello");
     add(testTree, "World");
@@ -25,7 +26,8 @@ void test_tree()
 
 void test_import_tree()
 {
-    Tree testTree = {.value = nullptr, .smaller = nullptr, .bigger = nullptr};
+    Tree testTree{};
+    testTree.value = nullptr; testTree.smaller = nullptr; testTree.bigger = nullptr;
 
     const char PATH[] = "ods4.txt";
     char newWord[MAX_WORD_SIZE] = { 0 };
@@ -40,4 +42,6 @@ void test_import_tree()
         assert (search(testTree, newWord));
     }
     in.close();
+
+    destoy(testTree);
 }

@@ -8,6 +8,10 @@
 #include "hstring.h"
 #include "tree.h"
 #include "types_const.h"
+#include <cstring>
+#include <cassert>
+#include <cstdlib>
+#include <ctime>
 
 struct Player {
     char type;

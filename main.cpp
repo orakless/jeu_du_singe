@@ -4,9 +4,7 @@
 using namespace std;
 
 #include "src/types_const.h"
-#include "src/hstring.h"
 #include "src/tree.h"
-#include "tests/tests.h"
 #include "src/game.h"
 
 int main(int argc, const char*argv[])
@@ -20,6 +18,9 @@ int main(int argc, const char*argv[])
     initialize(game, dictionary, argv[1]);
 
     new_game(game, dictionary);
+
+    destroy(dictionary);
+    destroy(game);
 
     return 0;
 }

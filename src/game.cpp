@@ -3,18 +3,6 @@
 //
 
 #include "game.h"
-#include "player.h"
-#include <cstring>
-#include <cassert>
-#include <iostream>
-#include <climits>
-#include <cctype>
-using namespace std;
-
-#include "tree.h"
-#include "hstring.h"
-#include "player.h"
-#include "types_const.h"
 
 
 void toupper(char * src)
@@ -169,4 +157,11 @@ void initialize(Game &game, Tree &dictionary, const char * szPlayers)
         initialize(game.players[indPlayers], szPlayers[indPlayers],
                    indPlayers+1, dictionary);
     }
+}
+
+void destroy(Game &game)
+{
+    destroy(game.word);
+    game.playerNumber = 0;
+    delete [] game.players;
 }

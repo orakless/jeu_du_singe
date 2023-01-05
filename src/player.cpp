@@ -3,11 +3,6 @@
 //
 
 #include "player.h"
-#include "hstring.h"
-#include <cstring>
-#include <cassert>
-#include <cstdlib>
-#include <ctime>
 
 
 bool is_human(Player &player)

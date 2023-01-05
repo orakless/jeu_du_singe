@@ -1,14 +1,5 @@
-#include <cstring>
-#include <cassert>
-#include <iomanip>
-#include <iostream>
-
 #include "tree.h"
-#include "hstring.h"
-#include "types_const.h"
-#include "text_file.h"
-#include "range.h"
-#include "file.h"
+
 
 void init(Tree &tree)
 {
@@ -24,6 +15,11 @@ bool is_tree_empty(const Tree &tree)
 
 void set(Tree &tree, const char *SRC)
 {
+    if (!is_tree_empty(tree))
+    {
+        destroy(*tree.value);
+        delete tree.value;
+    }
     tree.value = new String;
     init(tree.value);
     set(*tree.value, SRC);

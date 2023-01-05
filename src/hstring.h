@@ -1,6 +1,11 @@
 #ifndef SINGE_STRING
 #define SINGE_STRING
 
+#include "types_const.h"
+#include <cstring>
+#include <cassert>
+#include <cctype>
+
 struct String
 {
     char * value;
@@ -20,7 +25,7 @@ void init(String *str);
 bool is_allocated(const String &SRC);
 
 /**
- *
+ * Converts a string to uppercase
  * @param SRC
  */
 void to_upper(String &SRC);

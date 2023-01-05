@@ -14,6 +14,22 @@ struct Pile
 };
 
 /**
+ * @brief Checks if the Pile is empty or not
+ * @param pile
+ * @return Boolean value. If true, the Pile is empty.
+ */
+bool is_pile_empty(const Pile &pile);
+
+
+/**
+ * @brief Returns the head node.
+ * @param pile
+ * @return Pointer to a pNode variable
+ */
+pNode * head(const Pile &pile);
+
+
+/**
  * @brief Adds a Tree in the Pile
  * @param pile
  * @param tree
@@ -27,7 +43,7 @@ void add(Pile &pile, Tree * tree);
 void remove(Pile &pile);
 
 /**
- * @brief Destroys every memory dynamically allocated to the Pile.
+ * @brief Destroys every dynamically allocated struct in the Pile
  */
 void destroy(Pile &pile);
 

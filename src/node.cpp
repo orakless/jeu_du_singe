@@ -3,7 +3,7 @@
 //
 
 #include "node.h"
-#include <cassert>
+
 
 Range get(Node *node)
 {

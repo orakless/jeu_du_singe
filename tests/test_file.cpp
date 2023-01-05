@@ -6,20 +6,25 @@
 
 #include "tests.h"
 #include "../src/file.h"
-#include "../src/range.h"
 
 void test_file()
 {
-    File testFile = { .first = nullptr, .last = nullptr };
+    File testFile{};
+    testFile.first = nullptr;
+    testFile.last = nullptr;
 
-    Range testRange = { .start = 0, .end = 10 };
+    Range testRange{};
+    testRange.start = 0;
+    testRange.end = 10;
+
     assert (get_range(testRange) == 11);
 
     add(testFile, testRange);
     Node * testNode = head(testFile);
     assert (get_range(get(testNode)) == 11);
 
-    testRange = { .start = 5, .end = 10 };
+    testRange.start = 5;
+    testRange.end = 10;
     assert (get_range(testRange) == 6);
 
     add(testFile, testRange);

@@ -1,5 +1,4 @@
-#include <fstream>
-#include "types_const.h"
+
 #include "text_file.h"
 
 ulong get_line_count(std::ifstream &stream)

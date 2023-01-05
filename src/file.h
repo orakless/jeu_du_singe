@@ -7,6 +7,7 @@
 
 #include "node.h"
 #include "range.h"
+#include <cassert>
 
 struct File {
     Node * first;

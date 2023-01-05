@@ -3,9 +3,7 @@
 //
 
 #include "file.h"
-#include "range.h"
 
-#include <cassert>
 
 bool is_file_empty(const File &file)
 {
@@ -49,5 +47,10 @@ void remove(File &file)
 
 void destroy(File &file)
 {
+    File *currentFile = &file;
 
+    while (!is_file_empty(file))
+    {
+        remove(file);
+    }
 }
