@@ -12,6 +12,11 @@ struct Range {
     uint end;
 };
 
+/**
+ * @brief Gets the range between the two extremes of the variable
+ * @param range
+ * @return the range
+ */
 uint get_range(const Range &range);
 
 #endif //SINGE_RANGE_H

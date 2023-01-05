@@ -60,6 +60,7 @@ void ask_word(Game &game, Tree &dictionary, uint &playerTurn)
     {
         char playerWord[26];
         cin >> playerWord; toupper(playerWord);
+        cin.ignore(INT_MAX, '\n');
         newWord = playerWord;
     }
     else
