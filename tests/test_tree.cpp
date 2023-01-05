@@ -43,5 +43,5 @@ void test_import_tree()
     }
     in.close();
 
-    destoy(testTree);
+    destroy(testTree);
 }

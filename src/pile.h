@@ -5,6 +5,7 @@
 #ifndef SINGE_PILE_H
 #define SINGE_PILE_H
 
+#include <cassert>
 #include "pNode.h"
 #include "tree.h"
 

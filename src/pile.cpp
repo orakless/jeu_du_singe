@@ -2,9 +2,7 @@
 // Created by evag on 20/12/22.
 //
 
-#include <cassert>
 #include "pile.h"
-#include "pNode.h"
 
 bool is_pile_empty(const Pile &pile)
 {
@@ -18,7 +16,11 @@ pNode * head(const Pile &pile)
 
 void add(Pile &pile, Tree * tree)
 {
-    pile.last = new pNode{ .value = tree, .prev = pile.last };
+    auto * newNode = new pNode;
+    newNode->prev = pile.last;
+    newNode->value = tree;
+
+    pile.last = newNode;
 }
 
 void remove(Pile &pile)
@@ -26,6 +28,7 @@ void remove(Pile &pile)
     assert (!is_pile_empty(pile));
 
     pNode * nodeToRemove = pile.last;
+
     if (pile.last->prev != nullptr)
     {
         pile.last = nodeToRemove->prev;
@@ -34,6 +37,7 @@ void remove(Pile &pile)
     {
         pile.last = nullptr;
     }
+
     delete nodeToRemove;
 }
 

@@ -1,5 +1,5 @@
 #include "tree.h"
-
+#include "pile.h"
 
 void init(Tree &tree)
 {
@@ -85,10 +85,16 @@ static void import_loop(Tree &tree, char ** wordList, uint count)
 
     set(tree, wordList[index]); delete [] wordList[index]; wordList[index] = nullptr;
 
-    File ranges{.first = nullptr, .last = nullptr};
+    File ranges{};
+    ranges.first = nullptr;
+    ranges.last = nullptr;
 
-    Range currRange = {.start = 0, .end = index-1}; add(ranges, currRange);
-    currRange = {.start = index+1, .end = count-1}; add(ranges, currRange);
+    Range currRange{};
+    currRange.start = 0; currRange.end = index-1;
+    add(ranges, currRange);
+
+    currRange.start = index+1; currRange.end = count-1;
+    add(ranges, currRange);
 
     while (!is_file_empty(ranges) || count > 1)
     {
@@ -114,12 +120,12 @@ static void import_loop(Tree &tree, char ** wordList, uint count)
             --count;
             import_add(tree, wordList, index);
 
-            currRange = {.start = range.start,
-                    .end = index - 1};
+            currRange.start = range.start;
+            currRange.end = index - 1;
             add(ranges, currRange);
 
-            currRange = {.start = index + 1,
-                    .end = range.end};
+            currRange.start = index + 1;
+            currRange.end = range.end;
             add(ranges, currRange);
         }
     }
@@ -178,8 +184,6 @@ void import(Tree &tree, const char *PATH)
     in.close();
 
     import_loop(tree, wordList, count-1);
-
-    delete [] wordList;
 }
 
 bool search(Tree &tree, const char *SRC)
@@ -202,21 +206,34 @@ bool search(Tree &tree, const String &SRC)
 
 void destroy(Tree &tree)
 {
-    if (tree.smaller != nullptr)
+    Tree * currentTree = &tree;
+
+    if (currentTree == nullptr) return;
+
+    Pile tempPile{};
+    Pile cleanUpPile{};
+    tempPile.last = nullptr;
+    cleanUpPile.last = nullptr;
+
+    add(tempPile, currentTree);
+
+    while (!is_pile_empty(tempPile))
     {
-        destroy(*tree.smaller);
-        delete tree.smaller;
-        tree.smaller = nullptr;
+        currentTree = get(*head(tempPile));
+        add(cleanUpPile, currentTree);
+        remove(tempPile);
+
+        if (currentTree->bigger != nullptr)
+            add(tempPile, currentTree->bigger);
+        if (currentTree->smaller != nullptr)
+            add(tempPile, currentTree->smaller);
     }
 
-    if (tree.bigger != nullptr)
+    while(!is_pile_empty(cleanUpPile))
     {
-        destroy(*tree.bigger);
-        delete tree.bigger;
-        tree.bigger = nullptr;
+        currentTree = get(*head(cleanUpPile));
+        remove(cleanUpPile);
+        if (currentTree != &tree)
+            delete currentTree;
     }
-
-    destroy(*tree.value);
-    delete tree.value;
-    tree.value = nullptr;
 }

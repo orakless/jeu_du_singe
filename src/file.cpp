@@ -19,7 +19,8 @@ void add(File &file, const Range &range)
 {
 
     auto newNode = new Node;
-    newNode->currentRange = {.start = range.start, .end = range.end};
+    newNode->currentRange.start = range.start;
+    newNode->currentRange.end = range.end;
     newNode->nextNode = nullptr;
 
     if (is_file_empty(file)) file.first = newNode;
